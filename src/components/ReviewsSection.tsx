@@ -105,10 +105,10 @@ export const ReviewsSection = () => {
             whileInView={{ opacity: 1, y: 0, scale: 1 }}
             viewport={{ once: true, margin: "-50px" }}
             transition={{ duration: 0.6, delay: index * 0.15, ease: "easeOut" }}
-            className="bg-white dark:bg-gradient-to-br dark:from-white/5 dark:to-transparent border border-slate-200 dark:border-white/10 rounded-2xl p-6 shadow-md dark:shadow-xl dark:backdrop-blur-md relative overflow-hidden transition-all duration-1000"
+            className="bg-white dark:bg-gradient-to-br dark:from-white/5 dark:to-transparent border border-slate-200 dark:border-white/10 rounded-2xl p-6 shadow-md dark:shadow-xl relative overflow-hidden transition-all duration-1000"
           >
-            {/* Decorative Glow */}
-            <div className="absolute top-0 right-0 w-32 h-32 bg-sky-500 opacity-5 rounded-full blur-2xl -translate-y-1/2 translate-x-1/2" />
+            {/* Decorative Glow ultra-léger */}
+            <div className="absolute top-0 right-0 w-32 h-32 bg-[radial-gradient(circle_at_center,_rgba(14,165,233,0.1)_0%,_transparent_70%)] rounded-full -translate-y-1/2 translate-x-1/2" />
             
             <ReviewStars rating={review.rating} className="text-[#d8bd10] mb-3 relative z-10" />
             <p className="text-base text-slate-600 dark:text-gray-300 italic mb-5 relative z-10 leading-relaxed">"{review.text}"</p>

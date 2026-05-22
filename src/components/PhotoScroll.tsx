@@ -12,81 +12,77 @@ export const PhotoScroll = () => {
   return (
     <>
       <style>{`
-        html, body {
-          margin: 0;
-          padding: 0;
-          overflow-x: hidden;
-          font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-        }
-
         @keyframes scroll-right {
-          0% {
-            transform: translateX(0);
-          }
-          100% {
-            transform: translateX(-50%);
-          }
+          from { transform: translate3d(0, 0, 0); }
+          to   { transform: translate3d(-50%, 0, 0); }
         }
 
-        .infinite-scroll {
-          animation: scroll-right 20s linear infinite;
+        /* 
+          CRITICAL: translate3d force la création de la couche GPU
+          AVANT que l'élément entre dans la vue.
+          Sans ça, le navigateur freeze au moment du scroll.
+        */
+        .photo-track {
+          animation: scroll-right 22s linear infinite;
           will-change: transform;
+          transform: translate3d(0, 0, 0); /* pre-promote GPU layer */
+          backface-visibility: hidden;
         }
 
-        .scroll-container {
-          mask: linear-gradient(
-            90deg,
-            transparent 0%,
-            black 5%,
-            black 95%,
-            transparent 100%
-          );
-          -webkit-mask: linear-gradient(
-            90deg,
-            transparent 0%,
-            black 5%,
-            black 95%,
-            transparent 100%
-          );
+        /*
+          contain: strict isole cet élément du reste de la page.
+          Les recalculs de layout n'affectent plus les sections voisines.
+        */
+        .photo-section {
+          contain: layout style;
         }
 
-        .image-item {
-          transition: transform 0.3s ease, filter 0.3s ease;
+        .photo-item {
+          flex-shrink: 0;
+          border-radius: 12px;
+          overflow: hidden;
         }
 
-        .image-item:hover {
-          transform: scale(1.05);
-          filter: brightness(1.1);
+        /* Désactiver hover sur mobile pour éviter les lag tactiles */
+        @media (hover: hover) {
+          .photo-item:hover img {
+            transform: scale(1.05);
+          }
+        }
+
+        .photo-item img {
+          transition: transform 0.4s ease;
+          will-change: auto; /* Évite l'abus de will-change */
         }
       `}</style>
-      
-      <div className="w-full min-h-[30vh] md:minh-[50vh] py-6 md:py-12 bg-slate-50 dark:bg-[#0b1b33] relative overflow-hidden flex items-center justify-center transition-colors duration-1000">
-        {/* Background gradient removed to avoid dark sides */}
-        <div className="absolute inset-0 bg-slate-50 dark:bg-[#0b1b33] z-0 transition-colors duration-1000" />
-        
-        {/* Scrolling images container */}
-        <div className="relative z-10 w-full flex items-center justify-center py-8">
-          <div className="scroll-container w-full max-w-6xl">
-            <div className="infinite-scroll flex gap-6 w-max">
-              {duplicatedImages.map((image, index) => (
-                <div
-                  key={index}
-                  className="image-item flex-shrink-0 w-48 h-48 md:w-64 md:h-64 lg:w-80 lg:h-80 rounded-xl overflow-hidden shadow-2xl"
-                >
-                  <img
-                    src={image}
-                    alt={`Gallery image ${(index % images.length) + 1}`}
-                    className="w-full h-full object-cover"
-                    loading="lazy"
-                  />
-                </div>
-              ))}
-            </div>
+
+      <div
+        className="photo-section w-full py-6 md:py-10 bg-slate-50 dark:bg-[#0b1b33] relative overflow-hidden transition-colors duration-1000"
+      >
+        {/* Gradients latéraux */}
+        <div className="absolute top-0 left-0 bottom-0 w-[8%] bg-gradient-to-r from-slate-50 dark:from-[#0b1b33] to-transparent z-10 pointer-events-none transition-colors duration-1000" />
+        <div className="absolute top-0 right-0 bottom-0 w-[8%] bg-gradient-to-l from-slate-50 dark:from-[#0b1b33] to-transparent z-10 pointer-events-none transition-colors duration-1000" />
+
+        {/* Conteneur de défilement */}
+        <div className="w-full overflow-hidden">
+          <div className="photo-track flex gap-4 md:gap-6 w-max py-4">
+            {duplicatedImages.map((image, index) => (
+              <div
+                key={index}
+                className="photo-item w-44 h-44 md:w-64 md:h-64 lg:w-72 lg:h-72 shadow-lg"
+              >
+                <img
+                  src={image}
+                  alt={`Gallery image ${(index % images.length) + 1}`}
+                  className="w-full h-full object-cover"
+                  loading="eager"
+                  decoding="async"
+                  fetchPriority={index < 4 ? "high" : "low"}
+                />
+              </div>
+            ))}
           </div>
         </div>
-        
-        {/* Bottom gradient overlay */}
-        <div className="absolute bottom-0 left-0 right-0 h-24 bg-gradient-to-t from-slate-50 dark:from-[#0b1b33] to-transparent z-20 transition-colors duration-1000" />
       </div>
     </>
   );

@@ -21,6 +21,7 @@ export function ParticleHero() {
   const [isGoldMode, setIsGoldMode] = useState(false)
   const particlesRef = useRef<Particle[]>([])
   const animationRef = useRef<number>(0)
+  const isVisibleRef = useRef<boolean>(true)
 
   const createParticle = (canvas: HTMLCanvasElement): Particle => {
     const particle = {
@@ -91,6 +92,12 @@ export function ParticleHero() {
   }
 
   const animate = (canvas: HTMLCanvasElement, ctx: CanvasRenderingContext2D) => {
+    if (!isVisibleRef.current) {
+      // Pause de l'animation pour économiser le CPU/GPU quand on scroll vers le bas
+      animationRef.current = requestAnimationFrame(() => animate(canvas, ctx))
+      return
+    }
+    
     ctx.clearRect(0, 0, canvas.width, canvas.height)
     particlesRef.current.forEach((particle) => {
       particle.update()
@@ -118,6 +125,20 @@ export function ParticleHero() {
     canvas.width = window.innerWidth
     canvas.height = window.innerHeight
 
+    // Observer pour mettre en pause l'animation hors écran
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          isVisibleRef.current = entry.isIntersecting
+        })
+      },
+      { threshold: 0 }
+    )
+    
+    if (canvas.parentElement) {
+      observer.observe(canvas.parentElement)
+    }
+
     initParticles(canvas)
     animate(canvas, ctx)
 
@@ -125,6 +146,10 @@ export function ParticleHero() {
 
     return () => {
       window.removeEventListener("resize", handleResize)
+      if (canvas.parentElement) {
+        observer.unobserve(canvas.parentElement)
+      }
+      observer.disconnect()
       if (animationRef.current) {
         cancelAnimationFrame(animationRef.current)
       }
