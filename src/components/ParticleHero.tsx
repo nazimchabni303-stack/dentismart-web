@@ -149,7 +149,7 @@ export function ParticleHero() {
       }}
     >
       <style>{`
-        .gold-mode .heroT h2 {
+        .gold-mode .heroT h2 span {
           background: linear-gradient(0deg, #d8bd10 30%, #fef08a 100%) !important;
           background-clip: text !important;
           -webkit-background-clip: text !important;
@@ -265,7 +265,7 @@ export function ParticleHero() {
 
       {/* Header */}
       <div
-        className="header absolute top-[90px] md:top-[110px] w-full flex justify-center z-10 opacity-0"
+        className="header absolute top-[120px] md:top-[110px] w-full flex justify-center z-10 opacity-0"
         style={{
           color: "#bad6f7",
           animation: "load 2s ease-in 2s forwards, up 1.4s ease-out 2s forwards",
