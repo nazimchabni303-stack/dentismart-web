@@ -9,8 +9,8 @@ import { Footer } from './components/Footer';
 
 function App() {
   return (
-    <ReactLenis root>
-      <main className="bg-[#0b1b33] min-h-screen text-white font-sans selection:bg-[#98c0ef]/30 selection:text-white">
+    <ReactLenis root options={{ lerp: 0.1, duration: 1.2, touchMultiplier: 2, smoothWheel: true }}>
+      <main className="bg-white dark:bg-[#0b1b33] min-h-screen text-slate-600 dark:text-gray-300 font-sans selection:bg-sky-500/30 selection:text-sky-900 transition-colors duration-1000">
         <Navbar />
         
         <div id="home">

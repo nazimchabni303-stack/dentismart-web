@@ -30,6 +30,7 @@ export const PhotoScroll = () => {
 
         .infinite-scroll {
           animation: scroll-right 20s linear infinite;
+          will-change: transform;
         }
 
         .scroll-container {
@@ -59,9 +60,9 @@ export const PhotoScroll = () => {
         }
       `}</style>
       
-      <div className="w-full min-h-[30vh] md:min-h-[50vh] py-6 md:py-12 bg-[#0b1b33] relative overflow-hidden flex items-center justify-center">
+      <div className="w-full min-h-[30vh] md:minh-[50vh] py-6 md:py-12 bg-slate-50 dark:bg-[#0b1b33] relative overflow-hidden flex items-center justify-center transition-colors duration-1000">
         {/* Background gradient removed to avoid dark sides */}
-        <div className="absolute inset-0 bg-[#0b1b33] z-0" />
+        <div className="absolute inset-0 bg-slate-50 dark:bg-[#0b1b33] z-0 transition-colors duration-1000" />
         
         {/* Scrolling images container */}
         <div className="relative z-10 w-full flex items-center justify-center py-8">
@@ -85,7 +86,7 @@ export const PhotoScroll = () => {
         </div>
         
         {/* Bottom gradient overlay */}
-        <div className="absolute bottom-0 left-0 right-0 h-24 bg-gradient-to-t from-[#0b1b33] to-transparent z-20" />
+        <div className="absolute bottom-0 left-0 right-0 h-24 bg-gradient-to-t from-slate-50 dark:from-[#0b1b33] to-transparent z-20 transition-colors duration-1000" />
       </div>
     </>
   );

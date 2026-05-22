@@ -32,11 +32,11 @@ export const Navbar = () => {
         }`}
       >
         <div className="max-w-7xl mx-auto px-6">
-          <div className="flex items-center justify-between rounded-full bg-white/5 border border-white/10 backdrop-blur-md px-6 py-3 shadow-2xl">
+          <div className="flex items-center justify-between rounded-full bg-white/80 dark:bg-[#0b1b33]/80 border border-slate-200 dark:border-white/10 backdrop-blur-md px-6 py-3 shadow-xl transition-colors duration-1000">
             {/* Logo */}
             <a href="#home" className="flex items-center">
-              <span className="text-2xl font-black tracking-tighter bg-clip-text text-transparent bg-gradient-to-r from-white via-[#d8ecf8] to-[#98c0ef]">
-                Denti<span className="text-[#98c0ef]">Smart</span>
+              <span className="text-2xl font-black tracking-tighter bg-clip-text text-transparent bg-gradient-to-r from-slate-800 via-slate-600 to-sky-500 dark:from-white dark:via-sky-200 dark:to-sky-500 transition-colors duration-1000">
+                Denti<span className="text-sky-500">Smart</span>
               </span>
             </a>
 
@@ -46,10 +46,10 @@ export const Navbar = () => {
                 <a
                   key={link.name}
                   href={link.href}
-                  className="text-sm font-medium text-gray-300 hover:text-white transition-colors relative group"
+                  className="text-[15px] sm:text-[16px] font-medium text-slate-600 dark:text-gray-300 hover:text-sky-500 dark:hover:text-white transition-colors relative group"
                 >
                   {link.name}
-                  <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-[#98c0ef] transition-all group-hover:w-full"></span>
+                  <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-sky-500 transition-all group-hover:w-full"></span>
                 </a>
               ))}
             </div>
@@ -58,7 +58,7 @@ export const Navbar = () => {
             <div className="hidden md:flex">
               <a
                 href="#contact"
-                className="flex items-center gap-2 bg-[#98c0ef] text-black px-5 py-2.5 rounded-full font-semibold text-sm hover:bg-white transition-colors shadow-[0_0_15px_rgba(152,192,239,0.3)]"
+                className="flex items-center gap-2 bg-sky-500 text-white px-5 py-2.5 rounded-full font-semibold text-sm hover:bg-sky-600 transition-colors shadow-[0_0_15px_rgba(14,165,233,0.3)]"
               >
                 <Phone size={16} />
                 <span>0770 03 03 43</span>
@@ -67,7 +67,7 @@ export const Navbar = () => {
 
             {/* Mobile Menu Toggle */}
             <button
-              className="md:hidden text-white p-2"
+              className="md:hidden text-slate-800 dark:text-white p-2"
               onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
             >
               {isMobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
@@ -83,7 +83,7 @@ export const Navbar = () => {
             initial={{ opacity: 0, y: -20 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -20 }}
-            className="fixed inset-0 z-40 bg-[#05060f]/95 backdrop-blur-xl md:hidden pt-28 px-6"
+            className="fixed inset-0 z-40 bg-white/95 dark:bg-[#0b1b33]/95 backdrop-blur-xl md:hidden pt-28 px-6 transition-colors duration-1000"
           >
             <div className="flex flex-col gap-6 items-center">
               {navLinks.map((link) => (
@@ -91,7 +91,7 @@ export const Navbar = () => {
                   key={link.name}
                   href={link.href}
                   onClick={() => setIsMobileMenuOpen(false)}
-                  className="text-2xl font-medium text-gray-300 hover:text-white transition-colors"
+                  className="text-2xl font-medium text-slate-600 dark:text-gray-300 hover:text-sky-500 dark:hover:text-white transition-colors"
                 >
                   {link.name}
                 </a>
@@ -99,7 +99,7 @@ export const Navbar = () => {
               <a
                 href="#contact"
                 onClick={() => setIsMobileMenuOpen(false)}
-                className="flex items-center gap-2 bg-[#98c0ef] text-black px-8 py-4 rounded-full font-semibold text-lg mt-8"
+                className="flex items-center gap-2 bg-sky-500 text-white px-8 py-4 rounded-full font-semibold text-lg mt-8 shadow-[0_0_15px_rgba(14,165,233,0.3)]"
               >
                 <Phone size={20} />
                 <span>0770 03 03 43</span>

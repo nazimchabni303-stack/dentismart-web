@@ -26,18 +26,18 @@ const TestimonialsColumn = (props: {
             <React.Fragment key={index}>
               {props.testimonials.map((review, i) => (
                 <div 
-                  className="p-8 rounded-3xl border border-white/10 bg-white/5 backdrop-blur-md shadow-lg hover:bg-white/10 transition-colors duration-500 w-full" 
+                  className="p-8 rounded-3xl border border-slate-200 dark:border-white/10 bg-white dark:bg-white/5 shadow-md hover:shadow-lg dark:hover:bg-white/10 transition-all duration-500 w-full" 
                   key={i}
                 >
                   <ReviewStars rating={review.rating} className="text-[#d8bd10] mb-4" />
-                  <p className="text-gray-300 italic mb-6">"{review.text}"</p>
+                  <p className="text-slate-600 dark:text-gray-300 italic mb-6">"{review.text}"</p>
                   <div className="flex items-center gap-4 mt-5">
-                    <div className="w-12 h-12 rounded-full bg-gradient-to-r from-[#d8ecf8] to-[#98c0ef] flex items-center justify-center text-[#0b1b33] font-bold text-xl shadow-[0_0_15px_rgba(152,192,239,0.3)]">
+                    <div className="w-12 h-12 rounded-full bg-sky-500 flex items-center justify-center text-white font-bold text-xl shadow-[0_0_15px_rgba(14,165,233,0.3)]">
                       {review.name.charAt(0)}
                     </div>
                     <div className="flex flex-col">
-                      <div className="font-semibold text-white tracking-tight leading-5">{review.name}</div>
-                      <div className="leading-5 text-[#98c0ef] opacity-80 tracking-tight text-sm mt-1">Patient Vérifié</div>
+                      <div className="font-semibold text-slate-800 dark:text-white tracking-tight leading-5">{review.name}</div>
+                      <div className="leading-5 text-sky-500 opacity-80 tracking-tight text-sm mt-1">Patient Vérifié</div>
                     </div>
                   </div>
                 </div>
@@ -75,14 +75,14 @@ export const ReviewsSection = () => {
   ];
 
   return (
-    <section id="reviews" className="bg-[#0b1b33] relative overflow-hidden py-10 md:py-20">
+    <section id="reviews" className="bg-slate-50 dark:bg-[#0b1b33] relative overflow-hidden py-10 md:py-20 transition-colors duration-1000">
       
       {/* Title Shared */}
       <div className="text-center mb-10 md:mb-16 z-20 relative px-4 pt-4 md:pt-10">
-        <h2 className="text-3xl md:text-5xl font-bold bg-clip-text text-transparent bg-gradient-to-b from-white to-gray-500 mb-4 md:mb-6">
+        <h2 className="text-3xl md:text-5xl font-bold bg-clip-text text-transparent bg-gradient-to-b from-slate-800 to-slate-500 dark:from-white dark:to-gray-500 mb-4 md:mb-6 transition-colors duration-1000">
           Ce que disent nos patients
         </h2>
-        <p className="text-base md:text-xl text-gray-400 max-w-2xl mx-auto">
+        <p className="text-base md:text-xl text-slate-600 dark:text-gray-400 max-w-2xl mx-auto transition-colors duration-1000">
           La satisfaction de nos patients est priorité absolue.
         </p>
       </div>
@@ -90,8 +90,8 @@ export const ReviewsSection = () => {
       {/* Desktop Version: Infinite Scroll Column */}
       <div className="hidden md:flex justify-center h-[600px] overflow-hidden relative max-w-7xl mx-auto px-6">
         {/* Fade masks for smooth entrance/exit */}
-        <div className="absolute top-0 left-0 w-full h-32 bg-gradient-to-b from-[#0b1b33] to-transparent z-10 pointer-events-none" />
-        <div className="absolute bottom-0 left-0 w-full h-32 bg-gradient-to-t from-[#0b1b33] to-transparent z-10 pointer-events-none" />
+        <div className="absolute top-0 left-0 w-full h-32 bg-gradient-to-b from-slate-50 dark:from-[#0b1b33] to-transparent z-10 pointer-events-none transition-colors duration-1000" />
+        <div className="absolute bottom-0 left-0 w-full h-32 bg-gradient-to-t from-slate-50 dark:from-[#0b1b33] to-transparent z-10 pointer-events-none transition-colors duration-1000" />
         
         <TestimonialsColumn testimonials={reviews} duration={25} className="w-full max-w-[400px] mx-auto" />
       </div>
@@ -105,18 +105,18 @@ export const ReviewsSection = () => {
             whileInView={{ opacity: 1, y: 0, scale: 1 }}
             viewport={{ once: true, margin: "-50px" }}
             transition={{ duration: 0.6, delay: index * 0.15, ease: "easeOut" }}
-            className="bg-gradient-to-br from-white/5 to-transparent border border-white/10 rounded-2xl p-6 backdrop-blur-md shadow-xl relative overflow-hidden"
+            className="bg-white dark:bg-gradient-to-br dark:from-white/5 dark:to-transparent border border-slate-200 dark:border-white/10 rounded-2xl p-6 shadow-md dark:shadow-xl dark:backdrop-blur-md relative overflow-hidden transition-all duration-1000"
           >
             {/* Decorative Glow */}
-            <div className="absolute top-0 right-0 w-32 h-32 bg-[#98c0ef] opacity-5 rounded-full blur-2xl -translate-y-1/2 translate-x-1/2" />
+            <div className="absolute top-0 right-0 w-32 h-32 bg-sky-500 opacity-5 rounded-full blur-2xl -translate-y-1/2 translate-x-1/2" />
             
             <ReviewStars rating={review.rating} className="text-[#d8bd10] mb-3 relative z-10" />
-            <p className="text-base text-gray-300 italic mb-5 relative z-10 leading-relaxed">"{review.text}"</p>
+            <p className="text-base text-slate-600 dark:text-gray-300 italic mb-5 relative z-10 leading-relaxed">"{review.text}"</p>
             <div className="flex items-center gap-4 relative z-10">
-              <div className="w-10 h-10 rounded-full bg-gradient-to-r from-[#d8ecf8] to-[#98c0ef] flex items-center justify-center text-[#0b1b33] font-bold text-lg shadow-[0_0_15px_rgba(152,192,239,0.3)]">
+              <div className="w-10 h-10 rounded-full bg-sky-500 flex items-center justify-center text-white font-bold text-lg shadow-[0_0_15px_rgba(14,165,233,0.3)]">
                 {review.name.charAt(0)}
               </div>
-              <p className="text-white font-semibold text-lg">{review.name}</p>
+              <p className="text-slate-800 dark:text-white font-semibold text-lg">{review.name}</p>
             </div>
           </motion.div>
         ))}

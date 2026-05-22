@@ -1,50 +1,35 @@
 import React from "react";
 import { motion } from "framer-motion";
 import type { Variants, HTMLMotionProps } from "framer-motion";
-import { cn } from "../lib/utils"; // Assuming you have a utility for class names
+import { cn } from "../lib/utils";
 
-// Props definition for the FeatureHighlight component
 interface FeatureHighlightProps extends HTMLMotionProps<"div"> {
-  /**
-   * The main icon displayed at the top. Can be any React node.
-   */
   icon?: React.ReactNode;
-  /**
-   * The main title text.
-   */
   title: string;
-  /**
-   * An array of React nodes, where each node represents a line in the feature list.
-   * This allows for mixed content like text and images on the same line.
-   */
   features: React.ReactNode[];
-  /**
-   * An optional footer element.
-   */
   footer?: React.ReactNode;
 }
 
-// Animation variants for the main container
 const containerVariants: Variants = {
   hidden: { opacity: 0 },
   visible: {
     opacity: 1,
     transition: {
-      staggerChildren: 0.2, // Time delay between each child animation
+      staggerChildren: 0.08, // Réduit de 0.2s à 0.08s pour être plus rapide
+      delayChildren: 0.05,
     },
   },
 };
 
-// Animation variants for each child element (icon, title, features, footer)
 const itemVariants: Variants = {
-  hidden: { opacity: 0, y: 20 },
+  hidden: { opacity: 0, y: 16 },
   visible: {
     opacity: 1,
     y: 0,
     transition: {
       type: "spring",
-      stiffness: 100,
-      damping: 15,
+      stiffness: 200,
+      damping: 20,
     },
   },
 };
@@ -62,21 +47,19 @@ const FeatureHighlight = React.forwardRef<
       )}
       variants={containerVariants}
       initial="hidden"
-      animate="visible"
+      whileInView="visible"
+      viewport={{ once: true, margin: "-60px" }}
       {...props}
     >
-      {/* Animated Icon */}
       {icon && <motion.div variants={itemVariants}>{icon}</motion.div>}
 
-      {/* Animated Title */}
       <motion.h2
         variants={itemVariants}
-        className="text-4xl font-bold tracking-tight text-foreground"
+        className="text-4xl font-bold tracking-tight text-slate-800 dark:text-white transition-colors duration-1000"
       >
         {title}
       </motion.h2>
 
-      {/* Animated Feature List */}
       <div className="flex flex-col space-y-2">
         {features.map((feature, index) => (
           <motion.div
@@ -89,7 +72,6 @@ const FeatureHighlight = React.forwardRef<
         ))}
       </div>
       
-      {/* Animated Footer */}
       {footer && <motion.div variants={itemVariants}>{footer}</motion.div>}
     </motion.div>
   );
@@ -98,3 +80,4 @@ const FeatureHighlight = React.forwardRef<
 FeatureHighlight.displayName = "FeatureHighlight";
 
 export { FeatureHighlight };
+

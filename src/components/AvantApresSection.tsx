@@ -8,13 +8,13 @@ export const AvantApresSection = () => {
   ];
 
   return (
-    <section id="results" className="py-12 md:py-20 relative bg-[#0b1b33] overflow-hidden">
+    <section id="results" className="py-12 md:py-20 relative bg-white dark:bg-[#0b1b33] overflow-hidden transition-colors duration-1000">
       <div className="max-w-7xl mx-auto px-6 relative z-10">
         <div className="text-center mb-10 md:mb-20">
-          <h2 className="text-3xl md:text-5xl font-bold bg-clip-text text-transparent bg-gradient-to-b from-white to-gray-500 mb-4 md:mb-6">
+          <h2 className="text-3xl md:text-5xl font-bold bg-clip-text text-transparent bg-gradient-to-b from-slate-800 to-slate-500 dark:from-white dark:to-gray-500 mb-4 md:mb-6 transition-colors duration-1000">
             Résultats Avant / Après
           </h2>
-          <p className="text-base md:text-xl text-gray-400 max-w-2xl mx-auto px-4">
+          <p className="text-base md:text-xl text-slate-600 dark:text-gray-400 max-w-2xl mx-auto px-4 transition-colors duration-1000">
             Des sourires éclatants et des dents saines grâce à nos protocoles de détartrage et soins esthétiques avancés.
           </p>
         </div>
@@ -27,7 +27,7 @@ export const AvantApresSection = () => {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, margin: "-100px" }}
               transition={{ duration: 0.8, delay: idx * 0.2 }}
-              className="group relative rounded-2xl md:rounded-3xl overflow-hidden border border-white/10 bg-white/5 aspect-[4/3] md:aspect-square"
+              className="group relative rounded-2xl md:rounded-3xl overflow-hidden border border-slate-200 dark:border-white/10 bg-white dark:bg-white/5 shadow-md dark:shadow-none aspect-[4/3] md:aspect-square transition-all duration-1000"
             >
               <img 
                 src={img} 
