@@ -1,40 +1,50 @@
 export const PhotoScroll = () => {
   const images = [
-    "/assets/gallery-1.png",
-    "/assets/gallery-2.png",
-    "/assets/gallery-3.png",
-    "/assets/treatment.jpg",
-  ];
+    "/assets/gallery-1.webp",
+    "/assets/gallery-2.webp",
+    "/assets/gallery-3.webp",
+    "/assets/treatment.webp",
+  ] as const;
 
-  // Duplicate images for seamless loop
-  const duplicatedImages = [...images, ...images];
+  // Technique robuste sans trou ni saut :
+  // - On répète la série de base assez de fois pour qu'elle dépasse la
+  //   largeur de n'importe quel écran (REPEAT).
+  // - On rend cette séquence DEUX fois d'affilée dans UN SEUL flex avec un
+  //   gap UNIFORME partout (y compris entre les deux moitiés).
+  // - On translate le track de -50% : comme les deux moitiés sont identiques
+  //   et que le gap est uniforme, le point d'arrivée est rigoureusement
+  //   superposable au point de départ → boucle parfaitement continue.
+  const REPEAT = 4;
+  const sequence = Array.from({ length: REPEAT }, () => images).flat();
+  const track = [...sequence, ...sequence]; // doublé pour le -50%
 
   return (
     <>
       <style>{`
-        @keyframes scroll-right {
+        @keyframes photo-scroll {
           from { transform: translate3d(0, 0, 0); }
           to   { transform: translate3d(-50%, 0, 0); }
         }
 
-        /* 
-          CRITICAL: translate3d force la création de la couche GPU
-          AVANT que l'élément entre dans la vue.
-          Sans ça, le navigateur freeze au moment du scroll.
-        */
         .photo-track {
-          animation: scroll-right 22s linear infinite;
+          display: flex;
+          align-items: stretch;
+          width: max-content;
+          gap: 1rem;                 /* gap UNIFORME (mobile) */
+          animation: photo-scroll 60s linear infinite;
           will-change: transform;
-          transform: translate3d(0, 0, 0); /* pre-promote GPU layer */
+          transform: translate3d(0, 0, 0);
           backface-visibility: hidden;
         }
+        @media (min-width: 768px) {
+          .photo-track { gap: 1.5rem; } /* gap UNIFORME (desktop) */
+        }
 
-        /*
-          contain: strict isole cet élément du reste de la page.
-          Les recalculs de layout n'affectent plus les sections voisines.
-        */
-        .photo-section {
-          contain: layout style;
+        /* Pause au survol pour laisser regarder une photo (desktop only) */
+        @media (hover: hover) {
+          .photo-viewport:hover .photo-track {
+            animation-play-state: paused;
+          }
         }
 
         .photo-item {
@@ -43,7 +53,6 @@ export const PhotoScroll = () => {
           overflow: hidden;
         }
 
-        /* Désactiver hover sur mobile pour éviter les lag tactiles */
         @media (hover: hover) {
           .photo-item:hover img {
             transform: scale(1.05);
@@ -52,7 +61,11 @@ export const PhotoScroll = () => {
 
         .photo-item img {
           transition: transform 0.4s ease;
-          will-change: auto; /* Évite l'abus de will-change */
+          will-change: auto;
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+          .photo-track { animation: none; }
         }
       `}</style>
 
@@ -64,24 +77,26 @@ export const PhotoScroll = () => {
         <div className="absolute top-0 right-0 bottom-0 w-[8%] bg-gradient-to-l from-slate-50 dark:from-[#0b1b33] to-transparent z-10 pointer-events-none transition-colors duration-1000" />
 
         {/* Conteneur de défilement */}
-        <div className="w-full overflow-hidden">
-          <div className="photo-track flex gap-4 md:gap-6 w-max py-4">
-            {duplicatedImages.map((image, index) => (
-              <div
+        <div className="photo-viewport w-full overflow-hidden py-4">
+          <ul className="photo-track">
+            {track.map((image, index) => (
+              <li
                 key={index}
                 className="photo-item w-44 h-44 md:w-64 md:h-64 lg:w-72 lg:h-72 shadow-lg"
+                aria-hidden={index >= sequence.length ? "true" : undefined}
               >
                 <img
                   src={image}
                   alt={`Gallery image ${(index % images.length) + 1}`}
                   className="w-full h-full object-cover"
+                  width={600}
+                  height={600}
                   loading="eager"
                   decoding="async"
-                  fetchPriority={index < 4 ? "high" : "low"}
                 />
-              </div>
+              </li>
             ))}
-          </div>
+          </ul>
         </div>
       </div>
     </>

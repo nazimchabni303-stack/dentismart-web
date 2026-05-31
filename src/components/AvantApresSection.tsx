@@ -14,7 +14,7 @@ export const AvantApresSection = () => {
   return (
     <section
       id="results"
-      className="py-12 md:py-20 relative bg-white dark:bg-[#0b1b33] overflow-hidden transition-colors duration-1000"
+      className="py-12 md:py-20 relative bg-slate-50 dark:bg-[#0b1b33] overflow-hidden transition-colors duration-1000"
       style={{ contain: 'layout style' }}
     >
       <div className="max-w-7xl mx-auto px-6 relative z-10">
