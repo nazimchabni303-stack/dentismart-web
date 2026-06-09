@@ -1,15 +1,31 @@
-import { useScrollReveal, useMultiReveal } from '../hooks/useScrollReveal';
+import { useState, useRef } from 'react';
+import { useScrollReveal } from '../hooks/useScrollReveal';
+import { ChevronLeft, ChevronRight } from 'lucide-react';
 
 export const AvantApresSection = () => {
   const { ref: titleRef, isVisible: titleVisible } = useScrollReveal();
   const { ref: subtitleRef, isVisible: subtitleVisible } = useScrollReveal();
-  const { setRef: setImgRef, visible: imgVisible } = useMultiReveal(3);
+  const { ref: sliderRef, isVisible: sliderVisible } = useScrollReveal();
+  const [sliderPosition, setSliderPosition] = useState(50);
+  const containerRef = useRef<HTMLDivElement>(null);
 
-  const images = [
-    '/assets/avant-apres-1.webp',
-    '/assets/avant-apres-2.webp',
-    '/assets/avant-apres-3.webp',
-  ];
+  const handleMove = (clientX: number) => {
+    if (!containerRef.current) return;
+    const rect = containerRef.current.getBoundingClientRect();
+    const x = Math.max(0, Math.min(clientX - rect.left, rect.width));
+    const percent = Math.max(0, Math.min((x / rect.width) * 100, 100));
+    setSliderPosition(percent);
+  };
+
+  const handleTouchMove = (e: React.TouchEvent) => {
+    handleMove(e.touches[0].clientX);
+  };
+
+  const handleMouseMove = (e: React.MouseEvent) => {
+    if (e.buttons === 1) { // Left mouse button pressed
+      handleMove(e.clientX);
+    }
+  };
 
   return (
     <section
@@ -18,8 +34,6 @@ export const AvantApresSection = () => {
       style={{ contain: 'layout style' }}
     >
       <div className="max-w-7xl mx-auto px-6 relative z-10">
-
-        {/* Titre animé séparément */}
         <div className="text-center mb-10 md:mb-20">
           <h2
             ref={titleRef as React.RefObject<HTMLHeadingElement>}
@@ -31,33 +45,63 @@ export const AvantApresSection = () => {
             ref={subtitleRef as React.RefObject<HTMLParagraphElement>}
             className={`text-base md:text-xl text-slate-600 dark:text-gray-400 max-w-2xl mx-auto px-4 transition-colors duration-700 reveal-fade ${subtitleVisible ? 'visible' : ''}`}
           >
-            Des sourires éclatants et des dents saines grâce à nos protocoles de détartrage et soins esthétiques avancés.
+            Faites glisser le curseur pour comparer les résultats de nos soins. Un sourire éclatant et naturel vous attend.
           </p>
         </div>
 
-        {/* Chaque image se révèle individuellement */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-          {images.map((img, idx) => (
-            <div
-              key={idx}
-              ref={setImgRef(idx)}
-              className={`group relative rounded-2xl md:rounded-3xl overflow-hidden border border-slate-200 dark:border-white/10 bg-white dark:bg-white/5 shadow-md aspect-[4/3] md:aspect-square reveal-scale ${imgVisible[idx] ? 'visible' : ''}`}
-              style={{ transform: 'translateZ(0)' }}
+        <div 
+          ref={sliderRef as React.RefObject<HTMLDivElement>}
+          className={`max-w-4xl mx-auto reveal-scale ${sliderVisible ? 'visible' : ''}`}
+        >
+          <div 
+            ref={containerRef}
+            className="relative w-full aspect-[4/3] md:aspect-[16/9] rounded-2xl md:rounded-3xl overflow-hidden cursor-ew-resize select-none border border-slate-200 dark:border-white/10 shadow-xl"
+            onMouseMove={handleMouseMove}
+            onTouchMove={handleTouchMove}
+            onMouseDown={(e) => handleMove(e.clientX)}
+          >
+            {/* After Image (Background) */}
+            <img
+              src="/avant-apres/apres.webp"
+              alt="Résultat Après"
+              className="absolute inset-0 w-full h-full object-cover pointer-events-none"
+            />
+            
+            {/* Before Image (Foreground, clipped) */}
+            <div 
+              className="absolute inset-0 overflow-hidden pointer-events-none"
+              style={{ clipPath: `inset(0 ${100 - sliderPosition}% 0 0)` }}
             >
               <img
-                src={img}
-                alt="Résultat avant après"
-                decoding="async"
-                loading="eager"
-                className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+                src="/avant-apres/avant.webp"
+                alt="Résultat Avant"
+                className="absolute inset-0 w-full h-full object-cover max-w-none"
               />
-              <div className="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-400 flex items-end justify-center pb-6">
-                <span className="text-white font-medium px-4 py-1.5 rounded-full bg-white/10 border border-white/20 text-sm">
-                  Résultat DentiSmart
-                </span>
+            </div>
+            
+            {/* Slider Handle */}
+            <div 
+              className="absolute top-0 bottom-0 w-1 bg-white cursor-ew-resize flex items-center justify-center pointer-events-none"
+              style={{ left: `${sliderPosition}%`, transform: 'translateX(-50%)' }}
+            >
+              <div className="w-10 h-10 bg-white rounded-full flex items-center justify-center shadow-lg text-sky-500 ring-4 ring-white/30 backdrop-blur-sm">
+                <ChevronLeft className="w-5 h-5 -mr-1" />
+                <ChevronRight className="w-5 h-5 -ml-1" />
               </div>
             </div>
-          ))}
+
+            {/* Labels */}
+            <div className="absolute top-6 left-6 pointer-events-none">
+              <span className="bg-black/50 backdrop-blur-md text-white px-4 py-2 rounded-full text-sm font-semibold tracking-wide shadow-lg">
+                Avant
+              </span>
+            </div>
+            <div className="absolute top-6 right-6 pointer-events-none">
+              <span className="bg-sky-500/80 backdrop-blur-md text-white px-4 py-2 rounded-full text-sm font-semibold tracking-wide shadow-lg">
+                Après
+              </span>
+            </div>
+          </div>
         </div>
       </div>
     </section>

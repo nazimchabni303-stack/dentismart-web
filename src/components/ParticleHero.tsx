@@ -154,6 +154,7 @@ export function ParticleHero() {
         cancelAnimationFrame(animationRef.current)
       }
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   const toggleGoldMode = () => {

@@ -1,83 +1,97 @@
+import { Link } from 'react-router-dom';
 import { useScrollReveal, useMultiReveal } from '../hooks/useScrollReveal';
-import { FeatureHighlight } from './FeatureHighlight';
-import { Sparkles, ScanFace, Syringe, Microscope } from 'lucide-react';
+import { servicesData } from '../data/servicesData';
+import { ChevronRight } from 'lucide-react';
 
 export const ServicesSection = () => {
   const { ref: titleRef, isVisible: titleVisible } = useScrollReveal();
   const { ref: subtitleRef, isVisible: subtitleVisible } = useScrollReveal();
-  const { setRef: setCardRef, visible: cardVisible } = useMultiReveal(4);
-
-  const services = [
-    {
-      title: "Dentisterie Esthétique",
-      icon: <Sparkles className="w-12 h-12 text-sky-500" />,
-      features: ["Facettes dentaires sur-mesure", "Blanchiment professionnel", "Sourire hollywoodien"],
-    },
-    {
-      title: "Aligneurs Invisibles",
-      icon: <ScanFace className="w-12 h-12 text-sky-400" />,
-      features: ["Traitement orthodontique discret", "Confort optimal", "Résultats prévisibles en 3D"],
-    },
-    {
-      title: "Implantologie Avancée",
-      icon: <Syringe className="w-12 h-12 text-sky-500" />,
-      features: ["Implants haut de gamme", "Chirurgie guidée", "Restauration complète"],
-    },
-    {
-      title: "Soins sous Microscope",
-      icon: <Microscope className="w-12 h-12 text-sky-400" />,
-      features: ["Précision microscopique", "Traitements radiculaires réussis", "Préservation tissulaire"],
-    }
-  ];
+  const { setRef: setCardRef, visible: cardVisible } = useMultiReveal(servicesData.length);
 
   return (
     <section
       id="services"
-      className="py-12 md:py-20 relative bg-slate-50 dark:bg-[#0b1b33] overflow-hidden transition-colors duration-1000"
+      className="py-16 md:py-28 relative bg-slate-50 dark:bg-[#0b1b33] overflow-hidden transition-colors duration-1000"
       style={{ contain: 'layout style' }}
     >
+      {/* Background glows */}
       <div className="absolute top-1/4 left-0 w-[500px] h-[500px] bg-[radial-gradient(circle_at_center,_rgba(14,165,233,0.07)_0%,_transparent_70%)] pointer-events-none" />
       <div className="absolute bottom-1/4 right-0 w-[500px] h-[500px] bg-[radial-gradient(circle_at_center,_rgba(125,211,252,0.07)_0%,_transparent_70%)] pointer-events-none" />
+      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-[radial-gradient(circle_at_center,_rgba(139,92,246,0.04)_0%,_transparent_60%)] pointer-events-none" />
 
       <div className="max-w-7xl mx-auto px-6 relative z-10">
 
-        {/* Titre — apparaît en premier */}
-        <div className="text-center mb-10 md:mb-16">
+        {/* ── Header ── */}
+        <div className="text-center mb-14 md:mb-20">
           <h2
             ref={titleRef as React.RefObject<HTMLHeadingElement>}
             className={`text-4xl md:text-5xl font-bold bg-clip-text text-transparent bg-gradient-to-b from-slate-800 to-slate-500 dark:from-white dark:to-gray-500 mb-4 md:mb-6 leading-tight transition-colors duration-700 reveal ${titleVisible ? 'visible' : ''}`}
           >
-            L'Excellence Dentaire
+            Nos Services Dentaires
           </h2>
           <p
             ref={subtitleRef as React.RefObject<HTMLParagraphElement>}
             className={`text-base md:text-xl text-slate-600 dark:text-gray-400 max-w-2xl mx-auto px-4 transition-colors duration-700 reveal-fade ${subtitleVisible ? 'visible' : ''}`}
           >
-            Nous combinons l'expertise médicale et les technologies de pointe pour vous offrir des soins d'exception.
+            Une prise en charge complète, de la prévention aux soins les plus avancés, avec les dernières technologies.
           </p>
         </div>
 
-        {/* Chaque carte apparaît INDIVIDUELLEMENT quand elle entre dans la vue */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-          {services.map((service, index) => (
-            <div
+        {/* ── Services grid ── */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5">
+          {servicesData.map((service, index) => (
+            <Link
+              to={`/soins/${service.slug}`}
               key={index}
-              ref={setCardRef(index)}
-              className={`w-full reveal ${cardVisible[index] ? 'visible' : ''}`}
+              ref={setCardRef(index) as (el: HTMLElement | null) => void}
+              className={`reveal ${cardVisible[index] ? 'visible' : ''} block`}
+              style={{ animationDelay: `${index * 0.06}s` }}
             >
-              <div className="bg-white dark:bg-white/5 border border-slate-200 dark:border-white/10 p-5 md:p-8 rounded-2xl md:rounded-3xl shadow-sm hover:shadow-xl hover:border-sky-200 dark:hover:bg-white/10 transition-shadow duration-300 h-full">
-                <FeatureHighlight
-                  title={service.title}
-                  icon={service.icon}
-                  features={service.features.map((f, i) => (
-                    <span key={i} className="text-lg text-slate-600 dark:text-gray-300">{f}</span>
+              <div className="group relative bg-white dark:bg-white/[0.04] border border-slate-200/80 dark:border-white/[0.08] rounded-2xl p-6 h-full hover:shadow-xl hover:shadow-sky-500/5 dark:hover:bg-white/[0.07] hover:border-sky-200 dark:hover:border-sky-500/30 transition-all duration-400 hover:-translate-y-1 cursor-pointer">
+
+                {/* Gradient accent bar top */}
+                <div className={`absolute top-0 left-6 right-6 h-[2px] rounded-full bg-gradient-to-r ${service.color} opacity-0 group-hover:opacity-100 transition-opacity duration-500`} />
+
+                {/* Icon */}
+                <div className={`w-12 h-12 rounded-xl ${service.bgLight} ${service.bgDark} ${service.textColor} flex items-center justify-center mb-4 group-hover:scale-110 transition-transform duration-300`}>
+                  {service.icon}
+                </div>
+
+                {/* Title */}
+                <h3 className="text-lg font-bold text-slate-800 dark:text-white mb-3 transition-colors duration-700">
+                  {service.title}
+                </h3>
+
+                {/* Features list */}
+                <ul className="space-y-2 mb-4">
+                  {service.features.map((feature, i) => (
+                    <li key={i} className="flex items-start gap-2 text-sm text-slate-500 dark:text-gray-400">
+                      <span className={`mt-1.5 flex-shrink-0 w-1.5 h-1.5 rounded-full bg-gradient-to-r ${service.color}`} />
+                      {feature}
+                    </li>
                   ))}
-                  className="p-0 max-w-full"
-                />
+                </ul>
+
+                {/* "En savoir plus" link */}
+                <span className={`inline-flex items-center gap-1 text-xs font-semibold ${service.textColor} group-hover:gap-2 transition-all duration-300 mt-auto`}>
+                  En savoir plus
+                  <ChevronRight className="w-3.5 h-3.5" />
+                </span>
+
+                {/* Hover glow */}
+                <div className={`absolute inset-0 rounded-2xl bg-gradient-to-br ${service.color} opacity-0 group-hover:opacity-[0.03] transition-opacity duration-500 pointer-events-none`} />
               </div>
-            </div>
+            </Link>
           ))}
         </div>
+
+        {/* ── Bottom note ── */}
+        <div className="mt-12 text-center">
+          <p className="text-sm text-slate-400 dark:text-gray-500">
+            Chaque soin est adapté à vos besoins. Prenez rendez-vous pour un diagnostic personnalisé.
+          </p>
+        </div>
+
       </div>
     </section>
   );

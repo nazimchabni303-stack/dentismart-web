@@ -28,6 +28,7 @@ export function useScrollReveal(options?: IntersectionObserverInit) {
 
     observer.observe(el);
     return () => observer.disconnect();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return { ref, isVisible };
@@ -70,6 +71,7 @@ export function useMultiReveal(count: number, options?: IntersectionObserverInit
     });
 
     return () => observer.disconnect();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [count]);
 
   const setRef = (index: number) => (el: HTMLElement | null) => {
