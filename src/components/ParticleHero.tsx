@@ -463,12 +463,9 @@ export function ParticleHero() {
           }}
         >
           <h2
-            className="flex items-center"
+            className="flex items-center font-black tracking-tighter"
             style={{
-              fontFamily: "'Nunito', 'Segoe UI', sans-serif",
               fontSize: "clamp(3rem, 14vw, 7em)",
-              fontWeight: 700,
-              letterSpacing: "-0.01em",
               margin: 0,
               lineHeight: 1,
             }}
