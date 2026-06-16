@@ -21,15 +21,21 @@ export const Navbar = () => {
   const navLinks = isHome
     ? [
         { name: 'Accueil', href: '#home' },
+        { name: 'Le Cabinet', href: '#clinic' },
         { name: 'Soins', href: '#services' },
         { name: 'Avant/Après', href: '#results' },
+        { name: 'Blog', href: '#blog' },
         { name: 'Avis', href: '#reviews' },
+        { name: 'Contact', href: '#location' },
       ]
     : [
         { name: 'Accueil', href: '/' },
+        { name: 'Le Cabinet', href: '/#clinic' },
         { name: 'Soins', href: '/#services' },
         { name: 'Avant/Après', href: '/#results' },
+        { name: 'Blog', href: '/#blog' },
         { name: 'Avis', href: '/#reviews' },
+        { name: 'Contact', href: '/#location' },
       ];
 
   const handleNavClick = (href: string) => {
@@ -145,27 +151,54 @@ export const Navbar = () => {
       <AnimatePresence>
         {isMobileMenuOpen && (
           <motion.div
-            initial={{ opacity: 0, y: -20 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -20 }}
-            className="fixed inset-0 z-40 bg-white/95 dark:bg-[#0b1b33]/95 backdrop-blur-xl md:hidden pt-28 px-6 transition-colors duration-1000"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            className="fixed inset-0 z-40 bg-white/98 dark:bg-[#0b1b33]/98 backdrop-blur-3xl md:hidden flex flex-col px-6 transition-colors duration-500"
           >
-            <div className="flex flex-col gap-6 items-center">
-              {navLinks.map((link) =>
-                renderLink(
-                  link,
-                  "text-2xl font-medium text-slate-600 dark:text-gray-300 hover:text-sky-500 dark:hover:text-white transition-colors relative group",
-                  () => handleNavClick(link.href)
-                )
-              )}
-              <a
-                href="tel:0770030343"
-                onClick={() => setIsMobileMenuOpen(false)}
-                className="flex items-center gap-2 bg-sky-500 text-white px-8 py-4 rounded-full font-semibold text-lg mt-8 shadow-[0_0_15px_rgba(14,165,233,0.3)]"
+            {/* Center content vertically but allow scrolling if needed */}
+            <div className="flex flex-col h-full overflow-y-auto pt-32 pb-8">
+              <div className="flex flex-col gap-6 w-full max-w-sm mx-auto my-auto">
+                {navLinks.map((link, index) => (
+                  <motion.div
+                    key={link.name}
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: index * 0.1, duration: 0.4, ease: "easeOut" }}
+                  >
+                    {renderLink(
+                      link,
+                      "block w-full text-center py-3 text-3xl font-bold text-slate-800 dark:text-gray-100 hover:text-sky-500 dark:hover:text-sky-400 transition-colors",
+                      () => handleNavClick(link.href)
+                    )}
+                  </motion.div>
+                ))}
+              </div>
+              
+              <motion.div 
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.4, duration: 0.4 }}
+                className="mt-12 flex flex-col gap-5 w-full max-w-sm mx-auto"
               >
-                <Phone size={20} />
-                <span>0770 03 03 43</span>
-              </a>
+                <div className="w-16 h-1 bg-sky-500/20 mx-auto rounded-full mb-2"></div>
+                <div className="text-center">
+                  <p className="text-sm font-medium text-slate-500 dark:text-slate-400 mb-1">
+                    Prendre rendez-vous
+                  </p>
+                  <p className="text-xs text-slate-400 dark:text-slate-500 mb-4">
+                    Urgence ou consultation simple
+                  </p>
+                </div>
+                <a
+                  href="tel:0770030343"
+                  onClick={() => setIsMobileMenuOpen(false)}
+                  className="flex items-center justify-center gap-3 bg-sky-500 text-white w-full py-4 rounded-full font-bold text-lg shadow-[0_8px_30px_rgba(14,165,233,0.3)] hover:bg-sky-600 transition-all hover:scale-[1.02] active:scale-95"
+                >
+                  <Phone size={22} />
+                  <span>0770 03 03 43</span>
+                </a>
+              </motion.div>
             </div>
           </motion.div>
         )}

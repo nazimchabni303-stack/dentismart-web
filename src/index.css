@@ -114,4 +114,24 @@ body {
 .reveal-fade.visible,
 .reveal-scale.visible {
   animation-fill-mode: forwards;
+  will-change: auto; /* Libère la mémoire GPU après animation */
+}
+
+/* Dark mode body */
+.dark body,
+:where(.dark) body {
+  background-color: #0b1b33;
+  color: #d1d5db;
+}
+
+/* Smooth scroll global */
+html {
+  scroll-behavior: smooth;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Prevent layout shift on scrollbar */
+html {
+  scrollbar-gutter: stable;
 }

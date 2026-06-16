@@ -1,9 +1,13 @@
 export const PhotoScroll = () => {
   const images = [
-    "/assets/gallery-1.webp",
-    "/assets/gallery-2.webp",
-    "/assets/gallery-3.webp",
-    "/assets/treatment.webp",
+    "/clinic-photos/photo_1.jpeg",
+    "/clinic-photos/photo_2.jpeg",
+    "/clinic-photos/photo_3.jpeg",
+    "/clinic-photos/photo_4.jpeg",
+    "/clinic-photos/photo_5.jpeg",
+    "/clinic-photos/photo_6.jpeg",
+    "/clinic-photos/photo_7.jpeg",
+    "/clinic-photos/photo_8.jpeg",
   ] as const;
 
   // Technique robuste sans trou ni saut :

@@ -35,9 +35,8 @@ const footerLinks: FooterSection[] = [
 	{
 		label: 'Horaires',
 		links: [
-			{ title: 'Dim - Jeu : 08:00 - 18:00', href: '#' },
-			{ title: 'Samedi : 09:00 - 14:00', href: '#' },
-			{ title: 'Vendredi : Fermé', href: '#' },
+			{ title: 'Sam - Jeu : 09:00 - 21:00', href: '#' },
+			{ title: 'Vendredi : 14:00 - 22:00', href: '#' },
 		],
 	},
 	{

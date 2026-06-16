@@ -4,7 +4,10 @@ import { ParticleHero } from '../components/ParticleHero';
 import { ServicesSection } from '../components/ServicesSection';
 import { PhotoScroll } from '../components/PhotoScroll';
 import { AvantApresSection } from '../components/AvantApresSection';
+import { BlogSection } from '../components/BlogSection';
+import { ClinicSection } from '../components/ClinicSection';
 import { ReviewsSection } from '../components/ReviewsSection';
+import { LocationSection } from '../components/LocationSection';
 import { Footer } from '../components/Footer';
 import { FlaeshSection } from '../components/FlaeshSection';
 
@@ -26,7 +29,13 @@ export const HomePage = () => {
 
         <AvantApresSection />
         
+        <BlogSection />
+        
+        <ClinicSection />
+        
         <ReviewsSection />
+
+        <LocationSection />
 
         <Footer />
       </main>
