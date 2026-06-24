@@ -36,19 +36,15 @@ export const servicesData: ServiceData[] = [
     slug: 'generaux',
     title: 'Soins Généraux',
     icon: <HeartPulse className="w-7 h-7" />,
-    features: ['Nettoyage', 'Traitement des caries'],
+    features: ['Traitement des caries'],
     color: 'from-sky-500 to-sky-400',
     bgLight: 'bg-sky-50',
     bgDark: 'dark:bg-sky-500/10',
     textColor: 'text-sky-600 dark:text-sky-300',
     heroImage: 'https://images.unsplash.com/photo-1606811841689-23dfddce3e95?w=1200&q=80',
     description: 'Des soins fondamentaux pour une santé bucco-dentaire optimale.',
-    longDescription: 'Les soins généraux constituent la base d\'une bonne santé bucco-dentaire. Chez Dentismart, nous proposons des nettoyages professionnels approfondis et des traitements de caries utilisant les dernières techniques de dentisterie conservatrice. Notre objectif : préserver vos dents naturelles le plus longtemps possible.',
+    longDescription: 'Les soins généraux constituent la base d\'une bonne santé bucco-dentaire. Chez Dentismart, nous proposons des examens de contrôle et des traitements de caries utilisant les dernières techniques de dentisterie conservatrice. Notre objectif : préserver vos dents naturelles le plus longtemps possible.',
     details: [
-      {
-        title: 'Nettoyage professionnel',
-        text: 'Un détartrage et polissage minutieux pour éliminer la plaque dentaire et le tartre, prévenir les maladies parodontales et redonner éclat à votre sourire.',
-      },
       {
         title: 'Traitement des caries',
         text: 'Détection précoce et traitement des caries avec des matériaux composites de dernière génération, esthétiques et durables, pour des restaurations invisibles.',
@@ -192,7 +188,7 @@ export const servicesData: ServiceData[] = [
     details: [
       {
         title: 'Détartrage profond',
-        text: 'Un nettoyage en profondeur sous les gencives (surfaçage radiculaire) pour éliminer le tartre et les bactéries responsables des maladies parodontales.',
+        text: 'Un assainissement en profondeur sous les gencives (surfaçage radiculaire) pour éliminer le tartre et les bactéries responsables des maladies parodontales.',
       },
       {
         title: 'Traitement parodontal',
