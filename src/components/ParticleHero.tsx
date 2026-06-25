@@ -78,9 +78,11 @@ export function ParticleHero() {
   }
 
   const calculateParticleCount = (canvas: HTMLCanvasElement) => {
-    // Réduire de 2x sur mobile pour performances
+    // Optimisation extrême pour mobile : très peu de particules pour garder la fluidité
     const isMobile = window.innerWidth < 768
-    const divisor = isMobile ? 14000 : 6000
+    if (isMobile) return 20;
+    
+    const divisor = 6000
     return Math.floor((canvas.width * canvas.height) / divisor)
   }
 
@@ -320,7 +322,7 @@ export function ParticleHero() {
         />
 
         <div
-          className="spotlight"
+          className="spotlight hidden md:block"
           style={{
             pointerEvents: "none",
             position: "absolute",
