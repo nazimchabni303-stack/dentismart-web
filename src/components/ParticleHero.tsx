@@ -23,6 +23,7 @@ export function ParticleHero() {
   const animationRef = useRef<number>(0)
   const isVisibleRef = useRef<boolean>(true)
 
+
   const createParticle = (canvas: HTMLCanvasElement): Particle => {
     const particle = {
       x: 0,
@@ -365,6 +366,28 @@ export function ParticleHero() {
         </div>
       </div>
 
+      {/* Background Video */}
+      <video
+        src="/flaesh/flaesh_imagefilm_english_1080-1080p-1.mp4"
+        autoPlay
+        muted
+        loop
+        playsInline
+        preload="auto"
+        onTimeUpdate={(e) => {
+          const video = e.currentTarget;
+          if (video.currentTime >= 53) {
+            video.currentTime = 0;
+            video.play();
+          }
+        }}
+        className="absolute inset-0 w-full h-full object-cover pointer-events-none transition-opacity duration-1000"
+        style={{
+          opacity: isGoldMode ? 0.12 : 0.22,
+          zIndex: 0,
+        }}
+      />
+
       {/* Canvas */}
       <canvas
         ref={canvasRef}
@@ -471,19 +494,70 @@ export function ParticleHero() {
             }}
           >
             {/* Lettres animées une par une */}
-            {"Denti".split("").map((letter, i) => (
-              <span
-                key={`d-${i}`}
-                className="inline-block text-slate-700 dark:text-white transition-colors duration-1000"
-                style={{
-                  opacity: 0,
-                  transform: "translateY(0.3em)",
-                  animation: `load 0.5s ease-out ${0.5 + i * 0.06}s forwards, up 0.5s ease-out ${0.5 + i * 0.06}s forwards`,
-                }}
-              >
-                {letter}
-              </span>
-            ))}
+            {"Denti".split("").map((letter, i) => {
+              if (letter === 'i') {
+                return (
+                  <span
+                    key={`d-${i}`}
+                    className="inline-block text-slate-700 dark:text-white transition-colors duration-1000 relative"
+                    style={{
+                      opacity: 0,
+                      transform: "translateY(0.3em)",
+                      animation: `load 0.5s ease-out ${0.5 + i * 0.06}s forwards, up 0.5s ease-out ${0.5 + i * 0.06}s forwards`,
+                      letterSpacing: '0',
+                    }}
+                  >
+                    {/* Glowing blue lightbulb — anchored at same position as the validated red dot */}
+                    <span
+                      className="pointer-events-none animate-pulse"
+                      style={{
+                        position: 'absolute',
+                        top: '0.4em',
+                        left: '50%',
+                        transform: 'translate(-50%, -100%)',
+                        width: '0.55em',
+                        height: '0.55em',
+                        filter: 'drop-shadow(0 0 8px rgba(14,165,233,0.7))',
+                        display: 'flex',
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        zIndex: 20,
+                      }}
+                    >
+                      <svg viewBox="0 0 100 100" style={{ width: '100%', height: '100%' }} fill="#0ea5e9">
+                        {/* Rays */}
+                        <line x1="50" y1="14" x2="50" y2="4" stroke="#0ea5e9" strokeWidth="7" strokeLinecap="round" />
+                        <line x1="27" y1="22" x2="20" y2="15" stroke="#0ea5e9" strokeWidth="7" strokeLinecap="round" />
+                        <line x1="73" y1="22" x2="80" y2="15" stroke="#0ea5e9" strokeWidth="7" strokeLinecap="round" />
+                        <line x1="14" y1="44" x2="4" y2="42" stroke="#0ea5e9" strokeWidth="7" strokeLinecap="round" />
+                        <line x1="86" y1="44" x2="96" y2="42" stroke="#0ea5e9" strokeWidth="7" strokeLinecap="round" />
+                        {/* Bulb body */}
+                        <path
+                          d="M50 26 C36 26,28 37,28 50 C28 61,37 67,40 72 L40 80 C40 81,41 82,42 82 L58 82 C59 82,60 81,60 80 L60 72 C63 67,72 61,72 50 C72 37,64 26,50 26Z"
+                          fill="#0ea5e9"
+                        />
+                        {/* Base */}
+                        <path d="M40 82 L60 82 M42 87 L58 87 M45 92 L55 92" stroke={isGoldMode ? "#d8bd10" : "#64748b"} strokeWidth="6" strokeLinecap="round" />
+                      </svg>
+                    </span>
+                    ı
+                  </span>
+                );
+              }
+              return (
+                <span
+                  key={`d-${i}`}
+                  className="inline-block text-slate-700 dark:text-white transition-colors duration-1000"
+                  style={{
+                    opacity: 0,
+                    transform: "translateY(0.3em)",
+                    animation: `load 0.5s ease-out ${0.5 + i * 0.06}s forwards, up 0.5s ease-out ${0.5 + i * 0.06}s forwards`,
+                  }}
+                >
+                  {letter}
+                </span>
+              );
+            })}
             {"smart".split("").map((letter, i) => (
               <span
                 key={`s-${i}`}
@@ -536,7 +610,7 @@ export function ParticleHero() {
           </p>
 
           <div className="flex flex-col sm:flex-row gap-4 sm:gap-8 items-center justify-center pointer-events-auto w-full px-6 sm:px-0">
-            <a href="#contact" className="w-full sm:w-auto text-center px-6 sm:px-10 py-3 sm:py-5 rounded-full bg-gradient-to-r from-[#0ea5e9] to-[#2563eb] text-white font-bold text-base sm:text-xl hover:scale-105 transition-transform shadow-[0_0_30px_rgba(14,165,233,0.5)]">
+            <a href="https://wa.me/213770030343?text=Bonjour,%20je%20souhaite%20prendre%20rendez-vous." target="_blank" rel="noopener noreferrer" className="w-full sm:w-auto text-center px-6 sm:px-10 py-3 sm:py-5 rounded-full bg-gradient-to-r from-[#0ea5e9] to-[#2563eb] text-white font-bold text-base sm:text-xl hover:scale-105 transition-transform shadow-[0_0_30px_rgba(14,165,233,0.5)]">
               Prendre Rendez-vous
             </a>
             <a href="#services" className="w-full sm:w-auto text-center px-6 sm:px-10 py-3 sm:py-5 rounded-full border-2 border-sky-500/30 text-sky-600 font-semibold text-base sm:text-xl hover:bg-sky-50 transition-colors backdrop-blur-md bg-white/50">

@@ -9,6 +9,7 @@ import {
   ScanLine,
   Baby,
   Microscope,
+  Beaker,
 } from 'lucide-react';
 import type { ReactNode } from 'react';
 
@@ -31,7 +32,171 @@ export interface ServiceData {
   benefits: string[];
 }
 
+const XRayIcon = ({ className }: { className?: string }) => (
+  <svg
+    xmlns="http://www.w3.org/2000/svg"
+    viewBox="0 0 24 24"
+    fill="currentColor"
+    className={className}
+  >
+    <defs>
+      <mask id="xray-mask">
+        <rect x="0" y="0" width="24" height="24" fill="white" />
+        {/* Spine */}
+        <rect x="11.25" y="6" width="1.5" height="10" rx="0.2" fill="black" />
+        {/* Ribs */}
+        <rect x="7.5" y="8" width="9" height="1.5" rx="0.75" fill="black" />
+        <rect x="6.5" y="10.5" width="11" height="1.5" rx="0.75" fill="black" />
+        <rect x="7.5" y="13" width="9" height="1.5" rx="0.75" fill="black" />
+        {/* Pelvis */}
+        <rect x="8.5" y="15.5" width="7" height="1.5" rx="0.75" fill="black" />
+        <circle cx="8.5" cy="16.5" r="1.75" fill="black" />
+        <circle cx="15.5" cy="16.5" r="1.75" fill="black" />
+        <circle cx="8.5" cy="16.5" r="0.75" fill="white" />
+        <circle cx="15.5" cy="16.5" r="0.75" fill="white" />
+      </mask>
+    </defs>
+    {/* Top and Bottom Bars */}
+    <rect x="0" y="2" width="24" height="2.5" rx="0.5" />
+    <rect x="0" y="19.5" width="24" height="2.5" rx="0.5" />
+    {/* Main Screen */}
+    <rect x="2.5" y="5.5" width="19" height="13" mask="url(#xray-mask)" />
+  </svg>
+);
+
+const ToothIcon = ({ className }: { className?: string }) => (
+  <svg
+    xmlns="http://www.w3.org/2000/svg"
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="currentColor"
+    strokeWidth="2"
+    strokeLinecap="round"
+    strokeLinejoin="round"
+    className={className}
+  >
+    <path d="M7 3c-2.2 0-4 1.8-4 4 0 3.5 2.5 5 2.5 8 0 2.8 1.5 5 3.5 5s2-2 3-4c1 2 1 4 3 4 2 0 3.5-2.2 3.5-5 0-3 2.5-4.5 2.5-8 0-2.2-1.8-4-4-4-2 0-3.5 1.5-3.5 1.5S11 3 9 3z" />
+  </svg>
+);
+
+const ImplantIcon = ({ className }: { className?: string }) => (
+  <svg
+    xmlns="http://www.w3.org/2000/svg"
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="currentColor"
+    strokeWidth="2"
+    strokeLinecap="round"
+    strokeLinejoin="round"
+    className={className}
+  >
+    {/* Crown */}
+    <path d="M7 8c0-3 2-5 5-5s5 2 5 5c0 1.5-1.5 3-2.5 4.5C13.5 14 13 15 13 15h-2s-.5-1-1.5-2.5C8.5 11 7 9.5 7 8z" />
+    {/* Implant screw */}
+    <path d="M10 15h4" />
+    <path d="M11 15v6l1 1 1-1v-6" />
+    {/* Threads */}
+    <path d="M10 17h4" />
+    <path d="M10 19h4" />
+    <path d="M10 21h4" />
+  </svg>
+);
+
 export const servicesData: ServiceData[] = [
+  // EXCLUSIVE SERVICES (GOLD THEMED)
+  {
+    slug: 'imagerie',
+    title: 'Imagerie & Diagnostic',
+    icon: <XRayIcon className="w-7 h-7" />,
+    features: ['Radiologie panoramique', 'Scanner 3D'],
+    color: 'from-yellow-400 to-amber-500',
+    bgLight: 'bg-amber-50 border border-amber-200',
+    bgDark: 'dark:bg-amber-500/10 dark:border-amber-500/30',
+    textColor: 'text-amber-700 dark:text-amber-400',
+    heroImage: 'https://images.unsplash.com/photo-1516549655169-df83a0774514?w=1200&q=80',
+    description: 'Un diagnostic précis grâce à l\'imagerie de dernière génération.',
+    longDescription: 'Un diagnostic précis est la clé d\'un traitement réussi. Notre cabinet est équipé des technologies d\'imagerie les plus avancées pour visualiser en détail votre anatomie dentaire et planifier chaque intervention avec exactitude.',
+    details: [
+      {
+        title: 'Radiologie panoramique',
+        text: 'Une vue complète de toute votre mâchoire en une seule image. Essentielle pour le diagnostic global, la détection des pathologies et la planification des traitements.',
+      },
+      {
+        title: 'Scanner 3D (CBCT)',
+        text: 'Un scanner cone beam haute résolution qui crée une reconstitution 3D de vos structures dentaires et osseuses. Indispensable pour la planification d\'implants et la chirurgie guidée.',
+      },
+    ],
+    benefits: [
+      'Diagnostic ultra-précis',
+      'Faible dose de radiation',
+      'Résultats instantanés',
+      'Planification chirurgicale guidée',
+    ],
+  },
+  {
+    slug: 'technologie',
+    title: 'Technologie',
+    icon: <Microscope className="w-7 h-7" />,
+    features: ['Flux Numérique (Digital Workflow)', 'Microscope opératoire', 'Scanner intra-oral 3Shape'],
+    color: 'from-yellow-400 to-amber-500',
+    bgLight: 'bg-amber-50 border border-amber-200',
+    bgDark: 'dark:bg-amber-500/10 dark:border-amber-500/30',
+    textColor: 'text-amber-700 dark:text-amber-400',
+    heroImage: 'https://images.unsplash.com/photo-1581594693702-fbdc51b2763b?w=1200&q=80',
+    description: 'Les technologies les plus avancées au service de votre santé.',
+    longDescription: 'Dentismart investit continuellement dans les technologies de pointe pour vous offrir des soins d\'une précision et d\'une qualité exceptionnelles. Notre équipement de dernière génération permet des diagnostics plus précis et des traitements plus efficaces.',
+    details: [
+      {
+        title: 'Flux Numérique (Digital Workflow)',
+        text: 'L\'intégration complète des technologies numériques, de l\'empreinte à la pose de la prothèse. Un processus fluide, sans erreur et entièrement personnalisé, réduisant les délais et optimisant les résultats cliniques.',
+      },
+      {
+        title: 'Microscope opératoire',
+        text: 'Un grossissement jusqu\'à x25 pour une vision ultra-détaillée lors des traitements endodontiques et des restaurations complexes. Une précision impossible à atteindre à l\'œil nu.',
+      },
+      {
+        title: 'Scanner intra-oral 3Shape',
+        text: 'Une empreinte numérique 3D de vos dents en quelques secondes, sans la pâte traditionnelle inconfortable. Résultat : des prothèses et aligneurs d\'une précision millimétrique.',
+      },
+    ],
+    benefits: [
+      'Précision microscopique',
+      'Empreintes numériques confortables',
+      'Processus entièrement digitalisé',
+      'Traitements mini-invasifs',
+    ],
+  },
+  {
+    slug: 'laboratoire',
+    title: 'Laboratoire de Prothèses',
+    icon: <ToothIcon className="w-7 h-7" />,
+    features: ['Conception sur-mesure', 'Matériaux de haute qualité'],
+    color: 'from-yellow-400 to-amber-500',
+    bgLight: 'bg-amber-50 border border-amber-200',
+    bgDark: 'dark:bg-amber-500/10 dark:border-amber-500/30',
+    textColor: 'text-amber-700 dark:text-amber-400',
+    heroImage: 'https://images.unsplash.com/photo-1581595220892-b0739db3ba8c?w=1200&q=80',
+    description: 'Fabrication interne de vos prothèses pour une précision et une rapidité optimales.',
+    longDescription: 'Notre clinique intègre son propre laboratoire de prothèses dentaires. Cette étroite collaboration entre nos chirurgiens-dentistes et nos prothésistes nous permet de concevoir, fabriquer et ajuster vos prothèses (couronnes, bridges, facettes) avec une précision exceptionnelle, une esthétique parfaite et dans des délais réduits.',
+    details: [
+      {
+        title: 'Conception sur-mesure',
+        text: 'Chaque prothèse est modélisée numériquement (CAO) puis usinée (FAO) avec une précision millimétrique pour s\'adapter parfaitement à votre anatomie, garantissant un confort absolu et une esthétique naturelle.',
+      },
+      {
+        title: 'Matériaux de haute qualité',
+        text: 'Nous sélectionnons rigoureusement nos matériaux (zircone, céramique e.max) pour vous offrir des restaurations durables, biocompatibles et parfaitement intégrées à votre sourire.',
+      },
+    ],
+    benefits: [
+      'Fabrication rapide en interne',
+      'Ajustements esthétiques sur place',
+      'Contrôle qualité rigoureux',
+      'Communication directe dentiste-prothésiste',
+    ],
+  },
+
+  // OTHER SERVICES
   {
     slug: 'generaux',
     title: 'Soins Généraux',
@@ -61,22 +226,22 @@ export const servicesData: ServiceData[] = [
     slug: 'esthetique',
     title: 'Esthétique Dentaire',
     icon: <Sparkles className="w-7 h-7" />,
-    features: ['Blanchiment (fläsh.)', 'Facettes'],
+    features: ['Blanchiment (fläsh.)', 'Facettes en céramique E.max'],
     color: 'from-violet-500 to-purple-400',
     bgLight: 'bg-violet-50',
     bgDark: 'dark:bg-violet-500/10',
     textColor: 'text-violet-600 dark:text-violet-300',
     heroImage: '/soins/esthetique.jpg',
     description: 'Sublimez votre sourire avec nos soins esthétiques de pointe.',
-    longDescription: 'La dentisterie esthétique vous permet d\'obtenir le sourire dont vous avez toujours rêvé. Grâce à la technologie de blanchiment fläsh et aux facettes en céramique sur-mesure, nous transformons votre sourire en alliant beauté naturelle et résultats durables.',
+    longDescription: 'La dentisterie esthétique vous permet d\'obtenir le sourire dont vous avez toujours rêvé. Grâce à la technologie de blanchiment fläsh et aux facettes en céramique E.max sur-mesure, nous transformons votre sourire en alliant beauté naturelle et résultats durables.',
     details: [
       {
         title: 'Blanchiment fläsh.',
         text: 'Notre technologie exclusive de blanchiment professionnel permet d\'éclaircir vos dents jusqu\'à 8 teintes en une seule séance de 45 à 60 minutes, sans sensibilité ni douleur.',
       },
       {
-        title: 'Facettes dentaires',
-        text: 'Des facettes en céramique ultra-fines, sculptées sur-mesure pour corriger forme, couleur et alignement. Un résultat naturel et un sourire harmonieux qui dure des années.',
+        title: 'Facettes en céramique E.max',
+        text: 'Des facettes en céramique E.max ultra-fines, reconnues pour leur translucidité et leur résistance exceptionnelles. Sculptées sur-mesure pour corriger forme, couleur et alignement. Un résultat naturel et un sourire harmonieux qui dure des années.',
       },
     ],
     benefits: [
@@ -89,7 +254,7 @@ export const servicesData: ServiceData[] = [
   {
     slug: 'implants',
     title: 'Implants Dentaires',
-    icon: <Syringe className="w-7 h-7" />,
+    icon: <ImplantIcon className="w-7 h-7" />,
     features: ['Implant unitaire', 'Reconstruction complète'],
     color: 'from-cyan-500 to-teal-400',
     bgLight: 'bg-cyan-50',
@@ -149,10 +314,10 @@ export const servicesData: ServiceData[] = [
     title: 'Prothèses Dentaires',
     icon: <Crown className="w-7 h-7" />,
     features: ['Couronnes et bridges', 'Dentiers fixes ou amovibles'],
-    color: 'from-amber-500 to-orange-400',
-    bgLight: 'bg-amber-50',
-    bgDark: 'dark:bg-amber-500/10',
-    textColor: 'text-amber-600 dark:text-amber-300',
+    color: 'from-orange-500 to-red-400',
+    bgLight: 'bg-orange-50',
+    bgDark: 'dark:bg-orange-500/10',
+    textColor: 'text-orange-600 dark:text-orange-300',
     heroImage: 'https://images.unsplash.com/photo-1629909613654-28e377c37b09?w=1200&q=80',
     description: 'Des prothèses sur-mesure pour restaurer votre sourire.',
     longDescription: 'Nos prothèses dentaires sont fabriquées avec les matériaux les plus avancés pour un résultat esthétique et fonctionnel. Chaque prothèse est conçue sur-mesure pour s\'adapter parfaitement à votre bouche et vous redonner confort et confiance.',
@@ -232,35 +397,6 @@ export const servicesData: ServiceData[] = [
     ],
   },
   {
-    slug: 'imagerie',
-    title: 'Imagerie & Diagnostic',
-    icon: <ScanLine className="w-7 h-7" />,
-    features: ['Radiologie panoramique', 'Scanner 3D'],
-    color: 'from-emerald-500 to-green-400',
-    bgLight: 'bg-emerald-50',
-    bgDark: 'dark:bg-emerald-500/10',
-    textColor: 'text-emerald-600 dark:text-emerald-300',
-    heroImage: 'https://images.unsplash.com/photo-1516549655169-df83a0774514?w=1200&q=80',
-    description: 'Un diagnostic précis grâce à l\'imagerie de dernière génération.',
-    longDescription: 'Un diagnostic précis est la clé d\'un traitement réussi. Notre cabinet est équipé des technologies d\'imagerie les plus avancées pour visualiser en détail votre anatomie dentaire et planifier chaque intervention avec exactitude.',
-    details: [
-      {
-        title: 'Radiologie panoramique',
-        text: 'Une vue complète de toute votre mâchoire en une seule image. Essentielle pour le diagnostic global, la détection des pathologies et la planification des traitements.',
-      },
-      {
-        title: 'Scanner 3D (CBCT)',
-        text: 'Un scanner cone beam haute résolution qui crée une reconstitution 3D de vos structures dentaires et osseuses. Indispensable pour la planification d\'implants et la chirurgie guidée.',
-      },
-    ],
-    benefits: [
-      'Diagnostic ultra-précis',
-      'Faible dose de radiation',
-      'Résultats instantanés',
-      'Planification chirurgicale guidée',
-    ],
-  },
-  {
     slug: 'enfants',
     title: 'Soins pour Enfants',
     icon: <Baby className="w-7 h-7" />,
@@ -287,35 +423,6 @@ export const servicesData: ServiceData[] = [
       'Environnement adapté aux enfants',
       'Prévention dès le plus jeune âge',
       'Suivi de la croissance dentaire',
-    ],
-  },
-  {
-    slug: 'technologie',
-    title: 'Technologie',
-    icon: <Microscope className="w-7 h-7" />,
-    features: ['Microscope opératoire', 'Scanner intra-oral 3Shape'],
-    color: 'from-slate-600 to-slate-400',
-    bgLight: 'bg-slate-100',
-    bgDark: 'dark:bg-slate-500/10',
-    textColor: 'text-slate-600 dark:text-slate-300',
-    heroImage: 'https://images.unsplash.com/photo-1581594693702-fbdc51b2763b?w=1200&q=80',
-    description: 'Les technologies les plus avancées au service de votre santé.',
-    longDescription: 'Dentismart investit continuellement dans les technologies de pointe pour vous offrir des soins d\'une précision et d\'une qualité exceptionnelles. Notre équipement de dernière génération permet des diagnostics plus précis et des traitements plus efficaces.',
-    details: [
-      {
-        title: 'Microscope opératoire',
-        text: 'Un grossissement jusqu\'à x25 pour une vision ultra-détaillée lors des traitements endodontiques et des restaurations complexes. Une précision impossible à atteindre à l\'œil nu.',
-      },
-      {
-        title: 'Scanner intra-oral 3Shape',
-        text: 'Une empreinte numérique 3D de vos dents en quelques secondes, sans la pâte traditionnelle inconfortable. Résultat : des prothèses et aligneurs d\'une précision millimétrique.',
-      },
-    ],
-    benefits: [
-      'Précision microscopique',
-      'Empreintes numériques confortables',
-      'Résultats plus rapides',
-      'Traitements mini-invasifs',
     ],
   },
 ];

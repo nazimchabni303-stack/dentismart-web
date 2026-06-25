@@ -4,7 +4,6 @@ export const PhotoScroll = () => {
     "/clinic-photos/photo_2.jpeg",
     "/clinic-photos/photo_3.jpeg",
     "/clinic-photos/photo_4.jpeg",
-    "/clinic-photos/photo_5.jpeg",
     "/clinic-photos/photo_6.jpeg",
     "/clinic-photos/photo_7.jpeg",
     "/clinic-photos/photo_8.jpeg",

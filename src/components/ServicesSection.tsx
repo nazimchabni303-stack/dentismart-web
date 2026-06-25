@@ -39,7 +39,10 @@ export const ServicesSection = () => {
 
         {/* ── Services grid ── */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5">
-          {servicesData.map((service, index) => (
+          {servicesData.map((service, index) => {
+            const isExclusive = index < 3;
+            
+            return (
             <Link
               to={`/soins/${service.slug}`}
               key={index}
@@ -47,7 +50,17 @@ export const ServicesSection = () => {
               className={`reveal ${cardVisible[index] ? 'visible' : ''} block`}
               style={{ animationDelay: `${index * 0.06}s` }}
             >
-              <div className="group relative bg-white dark:bg-white/[0.04] border border-slate-200/80 dark:border-white/[0.08] rounded-2xl p-6 h-full hover:shadow-xl hover:shadow-sky-500/5 dark:hover:bg-white/[0.07] hover:border-sky-200 dark:hover:border-sky-500/30 transition-all duration-400 hover:-translate-y-1 cursor-pointer">
+              <div className={`group relative rounded-2xl p-6 h-full transition-all duration-400 hover:-translate-y-1 cursor-pointer ${
+                isExclusive 
+                  ? 'bg-gradient-to-br from-amber-50/50 to-white dark:from-amber-500/5 dark:to-white/[0.04] border-[1.5px] border-amber-300 dark:border-amber-600/60 shadow-[0_0_15px_rgba(251,191,36,0.15)] hover:shadow-[0_0_25px_rgba(251,191,36,0.3)] hover:border-amber-400 dark:hover:border-amber-500' 
+                  : 'bg-white dark:bg-white/[0.04] border border-slate-200/80 dark:border-white/[0.08] hover:shadow-xl hover:shadow-sky-500/5 dark:hover:bg-white/[0.07] hover:border-sky-200 dark:hover:border-sky-500/30'
+              }`}>
+                {/* Exclusive Badge */}
+                {isExclusive && (
+                  <div className="absolute -top-3 -right-2 bg-gradient-to-r from-yellow-400 to-amber-500 text-amber-950 text-[10px] sm:text-xs font-bold px-3 py-1 rounded-full shadow-md z-10 border border-white/40 whitespace-nowrap transform rotate-3 group-hover:rotate-0 transition-transform">
+                    Exclusivité Dentismart
+                  </div>
+                )}
 
                 {/* Gradient accent bar top */}
                 <div className={`absolute top-0 left-6 right-6 h-[2px] rounded-full bg-gradient-to-r ${service.color} opacity-0 group-hover:opacity-100 transition-opacity duration-500`} />
@@ -82,7 +95,7 @@ export const ServicesSection = () => {
                 <div className={`absolute inset-0 rounded-2xl bg-gradient-to-br ${service.color} opacity-0 group-hover:opacity-[0.03] transition-opacity duration-500 pointer-events-none`} />
               </div>
             </Link>
-          ))}
+          )})}
         </div>
 
         {/* ── Bottom note ── */}
