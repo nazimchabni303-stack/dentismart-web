@@ -151,24 +151,41 @@ export const Navbar = () => {
       <AnimatePresence>
         {isMobileMenuOpen && (
           <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            className="fixed inset-0 z-40 bg-white/98 dark:bg-[#0b1b33]/98 backdrop-blur-3xl md:hidden flex flex-col px-6 transition-colors duration-500"
+            initial={{ opacity: 0, y: -20, filter: 'blur(10px)' }}
+            animate={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
+            exit={{ opacity: 0, y: -20, filter: 'blur(10px)' }}
+            transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
+            className="fixed inset-0 z-40 bg-white/95 dark:bg-[#061121]/95 backdrop-blur-3xl md:hidden flex flex-col px-8 transition-colors duration-500 overflow-hidden"
           >
-            {/* Center content vertically but allow scrolling if needed */}
-            <div className="flex flex-col h-full overflow-y-auto pt-32 pb-8">
-              <div className="flex flex-col gap-6 w-full max-w-sm mx-auto my-auto">
+            {/* Animated decorative background blobs */}
+            <motion.div
+              initial={{ opacity: 0, scale: 0.5, x: 50 }}
+              animate={{ opacity: 1, scale: 1, x: 0 }}
+              transition={{ delay: 0.2, duration: 1, ease: 'easeOut' }}
+              className="absolute top-20 right-[-10%] w-72 h-72 bg-sky-500/20 dark:bg-sky-500/10 rounded-full blur-3xl pointer-events-none"
+            />
+            <motion.div
+              initial={{ opacity: 0, scale: 0.5, x: -50 }}
+              animate={{ opacity: 1, scale: 1, x: 0 }}
+              transition={{ delay: 0.3, duration: 1, ease: 'easeOut' }}
+              className="absolute bottom-40 left-[-10%] w-80 h-80 bg-amber-500/10 dark:bg-amber-500/5 rounded-full blur-3xl pointer-events-none"
+            />
+
+            {/* Content */}
+            <div className="flex flex-col h-full overflow-y-auto pt-32 pb-12 z-10 scrollbar-hide">
+              <div className="flex flex-col w-[85%] max-w-sm mx-auto mt-4">
                 {navLinks.map((link, index) => (
                   <motion.div
                     key={link.name}
                     initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}
-                    transition={{ delay: index * 0.1, duration: 0.4, ease: "easeOut" }}
+                    exit={{ opacity: 0, y: 10 }}
+                    transition={{ delay: 0.1 + index * 0.08, duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
+                    className="border-b border-slate-300 dark:border-slate-700 last:border-0"
                   >
                     {renderLink(
                       link,
-                      "block w-full text-center py-3 text-3xl font-bold text-slate-800 dark:text-gray-100 hover:text-sky-500 dark:hover:text-sky-400 transition-colors",
+                      "block w-full text-center py-5 text-[26px] font-bold tracking-tight text-slate-800 dark:text-gray-100 hover:text-sky-500 dark:hover:text-sky-400 transition-colors",
                       () => handleNavClick(link.href)
                     )}
                   </motion.div>
@@ -176,28 +193,23 @@ export const Navbar = () => {
               </div>
               
               <motion.div 
-                initial={{ opacity: 0, y: 20 }}
+                initial={{ opacity: 0, y: 30 }}
                 animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.4, duration: 0.4 }}
-                className="mt-12 flex flex-col gap-5 w-full max-w-sm mx-auto"
+                exit={{ opacity: 0, y: 20 }}
+                transition={{ delay: 0.6, duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
+                className="mt-auto pt-10 flex flex-col gap-4 w-full max-w-sm mx-auto"
               >
-                <div className="w-16 h-1 bg-sky-500/20 mx-auto rounded-full mb-2"></div>
-                <div className="text-center">
-                  <p className="text-sm font-medium text-slate-500 dark:text-slate-400 mb-1">
-                    Prendre rendez-vous
-                  </p>
-                  <p className="text-xs text-slate-400 dark:text-slate-500 mb-4">
-                    Urgence ou consultation simple
-                  </p>
-                </div>
                 <a
                   href="tel:0770030343"
                   onClick={() => setIsMobileMenuOpen(false)}
-                  className="flex items-center justify-center gap-3 bg-sky-500 text-white w-full py-4 rounded-full font-bold text-lg shadow-[0_8px_30px_rgba(14,165,233,0.3)] hover:bg-sky-600 transition-all hover:scale-[1.02] active:scale-95"
+                  className="flex items-center justify-center gap-3 bg-gradient-to-r from-sky-400 to-sky-600 text-white w-full py-4 rounded-2xl font-bold text-lg shadow-[0_8px_25px_rgba(14,165,233,0.35)] hover:shadow-[0_12px_35px_rgba(14,165,233,0.45)] transition-all hover:-translate-y-1 active:translate-y-0 active:scale-95"
                 >
-                  <Phone size={22} />
+                  <Phone size={22} className="animate-pulse" />
                   <span>0770 03 03 43</span>
                 </a>
+                <p className="text-center text-xs font-medium text-slate-400 dark:text-slate-500 uppercase tracking-widest mt-2">
+                  Urgences & Consultations
+                </p>
               </motion.div>
             </div>
           </motion.div>

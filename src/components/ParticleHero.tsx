@@ -509,12 +509,8 @@ export function ParticleHero() {
                   >
                     {/* Glowing blue lightbulb — anchored at same position as the validated red dot */}
                     <span
-                      className="pointer-events-none animate-pulse"
+                      className="pointer-events-none animate-pulse absolute left-1/2 -translate-x-1/2 -translate-y-full top-[0.35em] md:top-[0.4em]"
                       style={{
-                        position: 'absolute',
-                        top: '0.4em',
-                        left: '50%',
-                        transform: 'translate(-50%, -100%)',
                         width: '0.55em',
                         height: '0.55em',
                         filter: 'drop-shadow(0 0 8px rgba(14,165,233,0.7))',
