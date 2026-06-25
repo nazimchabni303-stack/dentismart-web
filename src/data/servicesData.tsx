@@ -1,15 +1,12 @@
 import {
   HeartPulse,
   Sparkles,
-  Syringe,
   ScanFace,
   Crown,
   ShieldPlus,
   Scissors,
-  ScanLine,
   Baby,
   Microscope,
-  Beaker,
 } from 'lucide-react';
 import type { ReactNode } from 'react';
 
