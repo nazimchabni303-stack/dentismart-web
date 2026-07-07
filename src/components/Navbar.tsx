@@ -153,7 +153,6 @@ export const Navbar = () => {
           </div>
         </div>
       </motion.nav>
-
       {/* Mobile Menu */}
       <AnimatePresence>
         {isMobileMenuOpen && (
@@ -162,61 +161,72 @@ export const Navbar = () => {
             animate={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
             exit={{ opacity: 0, y: -20, filter: 'blur(10px)' }}
             transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
-            className="fixed inset-0 z-40 bg-white/95 dark:bg-[#061121]/95 backdrop-blur-3xl md:hidden flex flex-col px-8 transition-colors duration-500 overflow-hidden"
+            className="fixed inset-0 z-40 bg-white/90 dark:bg-[#061121]/90 backdrop-blur-2xl md:hidden flex flex-col px-6 transition-colors duration-500 overflow-hidden"
           >
-            {/* Animated decorative background blobs */}
-            <motion.div
-              initial={{ opacity: 0, scale: 0.5, x: 50 }}
-              animate={{ opacity: 1, scale: 1, x: 0 }}
-              transition={{ delay: 0.2, duration: 1, ease: 'easeOut' }}
-              className="absolute top-20 right-[-10%] w-72 h-72 bg-sky-500/20 dark:bg-sky-500/10 rounded-full blur-3xl pointer-events-none"
+            {/* Background Video */}
+            <video
+              src="/flaesh/flaesh_imagefilm_english_1080-1080p-1.mp4"
+              autoPlay
+              muted
+              loop
+              playsInline
+              preload="auto"
+              className="absolute inset-0 w-full h-full object-cover pointer-events-none opacity-20 dark:opacity-15"
             />
-            <motion.div
-              initial={{ opacity: 0, scale: 0.5, x: -50 }}
-              animate={{ opacity: 1, scale: 1, x: 0 }}
-              transition={{ delay: 0.3, duration: 1, ease: 'easeOut' }}
-              className="absolute bottom-40 left-[-10%] w-80 h-80 bg-amber-500/10 dark:bg-amber-500/5 rounded-full blur-3xl pointer-events-none"
-            />
+            
+            {/* Gradient Mask over Video */}
+            <div className="absolute inset-0 bg-gradient-to-b from-white/95 via-white/80 to-sky-100/90 dark:from-[#061121]/95 dark:via-[#061121]/80 dark:to-[#08172b]/95 pointer-events-none" />
+
+            {/* Glowing Accent Blobs */}
+            <div className="absolute top-20 right-[-10%] w-64 h-64 bg-sky-500/25 dark:bg-sky-500/10 rounded-full blur-3xl pointer-events-none" />
+            <div className="absolute bottom-40 left-[-10%] w-72 h-72 bg-emerald-500/15 dark:bg-emerald-500/5 rounded-full blur-3xl pointer-events-none" />
 
             {/* Content */}
-            <div className="flex flex-col h-full overflow-y-auto pt-32 pb-12 z-10 scrollbar-hide">
-              <div className="flex flex-col w-[85%] max-w-sm mx-auto mt-4">
+            <div className="flex flex-col h-full overflow-y-auto pt-28 pb-8 z-10 scrollbar-hide">
+              {/* Navigation Links Grid/List */}
+              <div className="flex flex-col w-full max-w-sm mx-auto mt-4 gap-3">
                 {navLinks.map((link, index) => (
                   <motion.div
                     key={link.name}
-                    initial={{ opacity: 0, y: 20 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    exit={{ opacity: 0, y: 10 }}
-                    transition={{ delay: 0.1 + index * 0.08, duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
-                    className="border-b border-slate-300 dark:border-slate-700 last:border-0"
+                    initial={{ opacity: 0, x: -30 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    exit={{ opacity: 0, x: -20 }}
+                    transition={{ delay: 0.05 + index * 0.05, duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
+                    className="w-full"
                   >
                     {renderLink(
                       link,
-                      "block w-full text-center py-5 text-[26px] font-bold tracking-tight text-slate-800 dark:text-gray-100 hover:text-sky-500 dark:hover:text-sky-400 transition-colors",
+                      "block w-full text-center py-3.5 px-6 rounded-2xl text-[20px] font-bold tracking-tight text-slate-800 dark:text-gray-100 bg-white/40 dark:bg-white/5 border border-white/60 dark:border-white/10 hover:border-sky-500 dark:hover:border-sky-500/50 hover:text-sky-600 dark:hover:text-sky-400 hover:bg-white/80 dark:hover:bg-white/10 transition-all shadow-sm hover:shadow-md hover:scale-[1.02]",
                       () => handleNavClick(link.href)
                     )}
                   </motion.div>
                 ))}
               </div>
               
+              {/* CTA and Emergency Contact Info */}
               <motion.div 
                 initial={{ opacity: 0, y: 30 }}
                 animate={{ opacity: 1, y: 0 }}
                 exit={{ opacity: 0, y: 20 }}
-                transition={{ delay: 0.6, duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
-                className="mt-auto pt-10 flex flex-col gap-4 w-full max-w-sm mx-auto"
+                transition={{ delay: 0.5, duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
+                className="mt-auto pt-8 flex flex-col gap-3.5 w-full max-w-sm mx-auto"
               >
                 <a
                   href="tel:0770030343"
                   onClick={() => setIsMobileMenuOpen(false)}
-                  className="flex items-center justify-center gap-3 bg-gradient-to-r from-sky-400 to-sky-600 text-white w-full py-4 rounded-2xl font-bold text-lg shadow-[0_8px_25px_rgba(14,165,233,0.35)] hover:shadow-[0_12px_35px_rgba(14,165,233,0.45)] transition-all hover:-translate-y-1 active:translate-y-0 active:scale-95"
+                  className="flex items-center justify-center gap-3 bg-gradient-to-r from-sky-500 to-sky-600 dark:from-sky-500 dark:to-cyan-500 text-white w-full py-4 rounded-2xl font-bold text-lg shadow-[0_8px_30px_rgba(14,165,233,0.3)] hover:shadow-[0_12px_40px_rgba(14,165,233,0.45)] hover:scale-[1.02] active:scale-98 transition-all duration-300"
                 >
-                  <Phone size={22} className="animate-pulse" />
+                  <Phone size={20} className="animate-pulse" />
                   <span>0770 03 03 43</span>
                 </a>
-                <p className="text-center text-xs font-medium text-slate-400 dark:text-slate-500 uppercase tracking-widest mt-2">
-                  Urgences & Consultations
-                </p>
+                <div className="text-center">
+                  <p className="text-[11px] font-bold text-slate-500 dark:text-slate-400 uppercase tracking-widest">
+                    Urgences & Consultations 7j/7
+                  </p>
+                  <p className="text-[10px] text-slate-400 dark:text-slate-500 mt-1">
+                    Chéraga, Alger — Clinique DentiSmart
+                  </p>
+                </div>
               </motion.div>
             </div>
           </motion.div>
